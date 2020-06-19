@@ -2,14 +2,15 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: linear-gradient( 112.1deg,  rgba(32,38,57,1) 11.4%, rgba(63,76,119,1) 70.2% );
-    font-family: sans-serif;
+    background-image: radial-gradient( circle 788px at 0.7% 3.4%,  rgba(164,231,192,1) 0%, rgba(255,255,255,1) 90% );
     height: 100vh;
+    font-family: sans-serif;
+    
 }
 
 
 #title {
-    color: white;
+    color: black;
 }
 
 
@@ -22,4 +23,11 @@ body {
 
 path:hover {
     fill:white;
+}
+
+
+#legend {
+    position : absolute;
+    top: 90%;
+    left: 35%;
 }

@@ -115,8 +115,48 @@ const formChart = async () => {
         })})
         .on("mouseout", function(d){return tooltip.style("visibility", "hidden")})
 
+    const legend = d3.select('#legend')
+                .append('svg')
+                .attr('height', 100)
+                .attr('width',900)
+                
 
 
+    
+    
+    var formatPercent = d3.format(".0%"),
+    formatNumber = d3.format(".0f");
+
+    var threshold = d3.scaleThreshold()
+    .domain([0.03, 0.12, 0.21, 0.30, 0.39, 0.48, 0.57, 0.66])
+    .range(fillColors);
+
+    var x = d3.scaleLinear()
+    .domain([0, 1])
+    .range([0, 500]);
+
+    var xAxis = d3.axisBottom(x)
+    .tickSize(13)
+    .tickValues(threshold.domain())
+    .tickFormat(function(d) { return formatPercent(d) })
+
+    const g = legend.append("g").call(xAxis).style('font-size', '15px');
+
+    g.select(".domain")
+    .remove();
+
+    g.selectAll("rect")
+    .data(threshold.range().map(function(color) {
+    var d = threshold.invertExtent(color);
+    if (d[0] == null) d[0] = x.domain()[0];
+    if (d[1] == null) d[1] = x.domain()[1];
+    return d;
+    }))
+    .enter().insert("rect", ".tick")
+    .attr("height", 10)
+    .attr("x", function(d) { return x(d[0]); })
+    .attr("width", function(d) { return width/11 })
+    .attr("fill", function(d) { return threshold(d[0]); })
 }
 
 formChart();
